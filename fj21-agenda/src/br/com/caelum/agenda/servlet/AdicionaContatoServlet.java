@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ import br.com.caelum.agenda.modelo.Contato;
 @WebServlet("/adicionaContato")
 public class AdicionaContatoServlet extends HttpServlet {
 	
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 	PrintWriter	pw = response.getWriter();
 	
@@ -49,11 +51,10 @@ public class AdicionaContatoServlet extends HttpServlet {
 	
 	dao.adiciona(contato);
 	
-	pw.println("<html>");
-	pw.println("<body>");
-	pw.println("Contato " + contato.getNome() + " adicionado com sucesso!");
-	pw.println("<body>");
-	pw.println("<html>");
+	//response.sendRedirect("contato-adicionado.jsp");
+	
+	RequestDispatcher rd = request.getRequestDispatcher("contato-adicionado.jsp");
+	rd.forward(request,response);
 		
 	
 	}
